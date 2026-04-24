@@ -2,15 +2,14 @@
   "name": "appfront",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "lint": "expo lint"
-  },
+"scripts": {
+  "start": "npx serve dist",
+  "build": "npx expo export --platform web",
+  "web": "expo start --web",
+  "lint": "expo lint"
+},
   "dependencies": {
+    "serve": "^14.2.0",
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
