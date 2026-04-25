@@ -1,37 +1,51 @@
-import Constants from 'expo-constants';
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Constants from "expo-constants";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function RegistroScreen() {
-  const [cedula, setCedula] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [celular, setCelular] = useState('');
-  const [materia, setMateria] = useState('');
-  const [mensaje, setMensaje] = useState('');
-  const [error, setError] = useState('');
+  const [cedula, setCedula] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [celular, setCelular] = useState("");
+  const [materia, setMateria] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const registrarEstudiante = async () => {
-    setMensaje('');
-    setError('');
+    setMensaje("");
+    setError("");
     setLoading(true);
     try {
-      const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
+      const apiUrl =
+        process.env.EXPO_PUBLIC_API_URL ||
+        Constants.expoConfig?.extra?.apiUrl ||
+        "";
       const res = await fetch(`${apiUrl}estudiantes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cedula, nombre, correo, celular, materia })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cedula, nombre, correo, celular, materia }),
       });
       const data = await res.json();
       if (res.status === 201) {
-        setMensaje('// estudiante registrado con éxito ✓');
-        setCedula(''); setNombre(''); setCorreo(''); setCelular(''); setMateria('');
+        setMensaje("// estudiante registrado con éxito ✓");
+        setCedula("");
+        setNombre("");
+        setCorreo("");
+        setCelular("");
+        setMateria("");
       } else {
-        setError(`// error: ${data.error || 'Error al registrar'}`);
+        setError(`// error: ${data.error || "Error al registrar"}`);
       }
     } catch {
-      setError('// error: conexión fallida');
+      setError("// error: conexión fallida");
     }
     setLoading(false);
   };
@@ -40,7 +54,7 @@ export default function RegistroScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.prompt}>{'>'} registro.js</Text>
+        <Text style={styles.prompt}>{">"} registro.js</Text>
         <Text style={styles.title}>nuevo_estudiante()</Text>
         <View style={styles.divider} />
       </View>
@@ -48,7 +62,7 @@ export default function RegistroScreen() {
       {/* Form */}
       <View style={styles.form}>
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>{'// cedula'}</Text>
+          <Text style={styles.label}>{"// cedula"}</Text>
           <TextInput
             style={styles.input}
             placeholder="0000000000"
@@ -60,7 +74,7 @@ export default function RegistroScreen() {
         </View>
 
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>{'// nombre'}</Text>
+          <Text style={styles.label}>{"// nombre"}</Text>
           <TextInput
             style={styles.input}
             placeholder="Juan Pérez"
@@ -71,7 +85,7 @@ export default function RegistroScreen() {
         </View>
 
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>{'// correo'}</Text>
+          <Text style={styles.label}>{"// correo"}</Text>
           <TextInput
             style={styles.input}
             placeholder="juan@email.com"
@@ -84,7 +98,7 @@ export default function RegistroScreen() {
         </View>
 
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>{'// celular'}</Text>
+          <Text style={styles.label}>{"// celular"}</Text>
           <TextInput
             style={styles.input}
             placeholder="3001234567"
@@ -96,7 +110,7 @@ export default function RegistroScreen() {
         </View>
 
         <View style={styles.fieldGroup}>
-          <Text style={styles.label}>{'// materia'}</Text>
+          <Text style={styles.label}>{"// materia"}</Text>
           <TextInput
             style={styles.input}
             placeholder="Matemáticas"
@@ -112,7 +126,7 @@ export default function RegistroScreen() {
           disabled={loading}
         >
           <Text style={styles.buttonText}>
-            {loading ? '[ ejecutando... ]' : '[ REGISTRAR ]'}
+            {loading ? "[ ejecutando... ]" : "[ REGISTRAR ]"}
           </Text>
         </TouchableOpacity>
 
@@ -135,7 +149,7 @@ export default function RegistroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0f0a',
+    backgroundColor: "#0a0f0a",
   },
   content: {
     padding: 24,
@@ -145,24 +159,24 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   prompt: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 12,
-    color: '#4a7c4a',
+    color: "#4a7c4a",
     marginBottom: 4,
   },
   title: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 22,
-    color: '#00ff41',
-    fontWeight: 'bold',
+    color: "#00ff41",
+    fontWeight: "bold",
     marginBottom: 16,
-    textShadowColor: '#00ff4155',
+    textShadowColor: "#00ff4155",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
   divider: {
     height: 1,
-    backgroundColor: '#1a2e1a',
+    backgroundColor: "#1a2e1a",
   },
   form: {
     gap: 4,
@@ -171,64 +185,64 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 12,
-    color: '#4a7c4a',
+    color: "#4a7c4a",
     marginBottom: 6,
   },
   input: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 14,
-    color: '#00ff41',
-    backgroundColor: '#0d160d',
+    color: "#00ff41",
+    backgroundColor: "#0d160d",
     borderWidth: 1,
-    borderColor: '#1a3a1a',
+    borderColor: "#1a3a1a",
     borderRadius: 4,
     padding: 12,
   },
   button: {
     marginTop: 24,
-    backgroundColor: '#001a00',
+    backgroundColor: "#001a00",
     borderWidth: 1,
-    borderColor: '#00ff41',
+    borderColor: "#00ff41",
     borderRadius: 4,
     padding: 16,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonDisabled: {
-    borderColor: '#2a4a2a',
+    borderColor: "#2a4a2a",
   },
   buttonText: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 14,
-    color: '#00ff41',
-    fontWeight: 'bold',
+    color: "#00ff41",
+    fontWeight: "bold",
     letterSpacing: 2,
   },
   successBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: '#001a00',
+    backgroundColor: "#001a00",
     borderLeftWidth: 3,
-    borderLeftColor: '#00ff41',
+    borderLeftColor: "#00ff41",
     borderRadius: 2,
   },
   successText: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 13,
-    color: '#00ff41',
+    color: "#00ff41",
   },
   errorBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: '#1a0000',
+    backgroundColor: "#1a0000",
     borderLeftWidth: 3,
-    borderLeftColor: '#ff3333',
+    borderLeftColor: "#ff3333",
     borderRadius: 2,
   },
   errorText: {
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontSize: 13,
-    color: '#ff3333',
+    color: "#ff3333",
   },
 });
