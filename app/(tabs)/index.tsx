@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function RegistroScreen() {
   const [cedula, setCedula] = useState('');
@@ -19,7 +19,7 @@ export default function RegistroScreen() {
     setLoading(true);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
-      const res = await fetch(`${apiUrl}/estudiantes`, {
+      const res = await fetch(`${apiUrl}estudiantes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cedula, nombre, correo, celular, materia })
