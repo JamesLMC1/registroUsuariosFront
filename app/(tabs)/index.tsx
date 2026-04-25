@@ -149,100 +149,116 @@ export default function RegistroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0f0a",
+    backgroundColor: "#0b0b0b",
   },
+
   content: {
     padding: 24,
     paddingTop: 60,
   },
+
   header: {
     marginBottom: 32,
   },
+
   prompt: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#888888",
     marginBottom: 4,
   },
+
   title: {
     fontFamily: "monospace",
     fontSize: 22,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
     marginBottom: 16,
-    textShadowColor: "#00ff4155",
+    textShadowColor: "#ffffff33",
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
+    textShadowRadius: 8,
   },
+
   divider: {
     height: 1,
-    backgroundColor: "#1a2e1a",
+    backgroundColor: "#1f1f1f",
   },
+
   form: {
     gap: 4,
   },
+
   fieldGroup: {
     marginBottom: 16,
   },
+
   label: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#aaaaaa",
     marginBottom: 6,
   },
+
   input: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
-    backgroundColor: "#0d160d",
+    color: "#ffffff",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 12,
   },
+
   button: {
     marginTop: 24,
-    backgroundColor: "#001a00",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#00ff41",
+    borderColor: "#ffffff",
     borderRadius: 4,
     padding: 16,
     alignItems: "center",
   },
+
   buttonDisabled: {
-    borderColor: "#2a4a2a",
+    borderColor: "#555555",
   },
+
   buttonText: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
     letterSpacing: 2,
   },
+
   successBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: "#001a00",
+    backgroundColor: "#140f1f",
     borderLeftWidth: 3,
-    borderLeftColor: "#00ff41",
+    borderLeftColor: "#a855f7",
     borderRadius: 2,
   },
+
   successText: {
     fontFamily: "monospace",
     fontSize: 13,
-    color: "#00ff41",
+    color: "#e9d5ff",
   },
+
   errorBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: "#1a0000",
+    backgroundColor: "#1a0d0d",
     borderLeftWidth: 3,
-    borderLeftColor: "#ff3333",
+    borderLeftColor: "#ff4d4d",
     borderRadius: 2,
   },
+
   errorText: {
     fontFamily: "monospace",
     fontSize: 13,
-    color: "#ff3333",
+    color: "#ff9999",
   },
 });

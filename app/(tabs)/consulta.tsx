@@ -130,19 +130,19 @@ export default function ConsultaScreen() {
             </Text>
             <Text style={styles.resultLine}>
               <Text style={styles.key}>nombre: </Text>
-              <Text style={styles.val}>"{result.estudiante.nombre}"</Text>
+              <Text style={styles.val}>{result.estudiante.nombre}</Text>
             </Text>
             <Text style={styles.resultLine}>
               <Text style={styles.key}>cedula: </Text>
-              <Text style={styles.val}>"{result.estudiante.cedula}"</Text>
+              <Text style={styles.val}>{result.estudiante.cedula}</Text>
             </Text>
             <Text style={styles.resultLine}>
               <Text style={styles.key}>correo: </Text>
-              <Text style={styles.val}>"{result.estudiante.correo}"</Text>
+              <Text style={styles.val}>{result.estudiante.correo}</Text>
             </Text>
             <Text style={styles.resultLine}>
               <Text style={styles.key}>celular: </Text>
-              <Text style={styles.val}>"{result.estudiante.celular}"</Text>
+              <Text style={styles.val}>{result.estudiante.celular}</Text>
             </Text>
           </View>
 
@@ -186,130 +186,180 @@ export default function ConsultaScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0a0f0a" },
+  container: { flex: 1, backgroundColor: "#0b0b0b" },
   content: { padding: 24, paddingTop: 60 },
+
   header: { marginBottom: 32 },
+
   prompt: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#888888",
     marginBottom: 4,
   },
+
   title: {
     fontFamily: "monospace",
     fontSize: 22,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
     marginBottom: 16,
-    textShadowColor: "#00ff4155",
+    textShadowColor: "#ffffff33",
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
+    textShadowRadius: 8,
   },
-  divider: { height: 1, backgroundColor: "#1a2e1a" },
+
+  divider: { height: 1, backgroundColor: "#1f1f1f" },
+
   section: { marginBottom: 24 },
+
   sectionLabel: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#2a5a2a",
+    color: "#666666",
     marginBottom: 16,
     fontStyle: "italic",
   },
+
   fieldGroup: { marginBottom: 16 },
+
   label: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#aaaaaa",
     marginBottom: 6,
   },
+
   input: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
-    backgroundColor: "#0d160d",
+    color: "#ffffff",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 12,
   },
+
   button: {
-    backgroundColor: "#001a00",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#00ff41",
+    borderColor: "#d6d3d3",
     borderRadius: 4,
     padding: 16,
     alignItems: "center",
   },
+
   buttonText: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
+    color: "#ffffff73",
     fontWeight: "bold",
     letterSpacing: 2,
   },
+
   resultBox: {
-    backgroundColor: "#0d160d",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 16,
     marginBottom: 24,
   },
-  resultLine: { fontFamily: "monospace", fontSize: 13, marginBottom: 4 },
-  key: { color: "#4a7c4a" },
-  val: { color: "#00ff41" },
+
+  resultLine: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    marginBottom: 4,
+  },
+
+  key: { color: "#aaaaaa" },
+  val: { color: "#ffffff" },
+
   notaCard: {
-    backgroundColor: "#0d160d",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 16,
     marginBottom: 12,
   },
+
   notaHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 12,
   },
+
   notaMateria: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
   },
+
   notaDef: {
     fontFamily: "monospace",
     fontSize: 22,
     fontWeight: "bold",
+    color: "#c084fc", // morado suave
+    textShadowColor: "#c084fc55",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 8,
   },
-  notaRow: { flexDirection: "row", justifyContent: "space-between" },
-  notaItem: { alignItems: "center", flex: 1 },
+
+  notaRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  notaItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+
   notaItemLabel: {
     fontFamily: "monospace",
     fontSize: 11,
-    color: "#4a7c4a",
+    color: "#888888",
     marginBottom: 2,
   },
-  notaItemVal: { fontFamily: "monospace", fontSize: 16, color: "#a0d0a0" },
+
+  notaItemVal: {
+    fontFamily: "monospace",
+    fontSize: 16,
+    color: "#dddddd",
+  },
+
   emptyBox: {
     padding: 20,
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderStyle: "dashed",
     borderRadius: 4,
     alignItems: "center",
   },
-  emptyText: { fontFamily: "monospace", fontSize: 13, color: "#2a5a2a" },
+
+  emptyText: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    color: "#777777",
+  },
+
   errorBox: {
     marginTop: 8,
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#1a0000",
+    backgroundColor: "#1a0d0d",
     borderLeftWidth: 3,
-    borderLeftColor: "#ff3333",
+    borderLeftColor: "#ff4d4d",
     borderRadius: 2,
   },
-  errorText: { fontFamily: "monospace", fontSize: 13, color: "#ff3333" },
+
+  errorText: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    color: "#ff9999",
+  },
 });

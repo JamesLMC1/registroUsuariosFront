@@ -243,94 +243,131 @@ export default function NotasScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0a0f0a" },
+  container: { flex: 1, backgroundColor: "#0b0b0b" },
   content: { padding: 24, paddingTop: 60 },
+
   header: { marginBottom: 32 },
+
   prompt: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#888888",
     marginBottom: 4,
   },
+
   title: {
     fontFamily: "monospace",
     fontSize: 22,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
     marginBottom: 16,
   },
-  divider: { height: 1, backgroundColor: "#1a2e1a" },
+
+  divider: { height: 1, backgroundColor: "#1f1f1f" },
+
   section: { marginBottom: 24 },
+
   sectionLabel: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#2a5a2a",
+    color: "#666666",
     marginBottom: 16,
   },
+
   fieldGroup: { marginBottom: 16 },
+
   label: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#4a7c4a",
+    color: "#aaaaaa",
     marginBottom: 6,
   },
+
   input: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
-    backgroundColor: "#0d160d",
+    color: "#ffffff",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 12,
   },
+
   button: {
-    backgroundColor: "#001a00",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#00ff41",
+    borderColor: "#ffffff",
     borderRadius: 4,
     padding: 16,
     alignItems: "center",
   },
-  buttonSecondary: { borderColor: "#2a5a2a" },
+
+  buttonSecondary: {
+    borderColor: "#666666",
+  },
+
   buttonText: {
     fontFamily: "monospace",
     fontSize: 14,
-    color: "#00ff41",
+    color: "#ffffff",
     fontWeight: "bold",
   },
-  buttonTextSecondary: { color: "#4a9a4a" },
+
+  buttonTextSecondary: {
+    color: "#aaaaaa",
+  },
+
   resultBox: {
-    backgroundColor: "#0d160d",
+    backgroundColor: "#121212",
     borderWidth: 1,
-    borderColor: "#1a3a1a",
+    borderColor: "#2a2a2a",
     borderRadius: 4,
     padding: 16,
     marginBottom: 24,
   },
+
   resultHeader: {
     fontFamily: "monospace",
     fontSize: 12,
-    color: "#2a5a2a",
+    color: "#888888",
     marginBottom: 10,
   },
-  resultLine: { fontFamily: "monospace", fontSize: 13, marginBottom: 4 },
-  key: { color: "#4a7c4a" },
-  val: { color: "#00ff41" },
+
+  resultLine: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    marginBottom: 4,
+  },
+
+  key: { color: "#aaaaaa" },
+  val: { color: "#ffffff" },
+
   successBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: "#001a00",
+    backgroundColor: "#140f1f",
     borderLeftWidth: 3,
-    borderLeftColor: "#00ff41",
+    borderLeftColor: "#a855f7", // morado
   },
-  successText: { fontFamily: "monospace", fontSize: 13, color: "#00ff41" },
+
+  successText: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    color: "#e9d5ff",
+  },
+
   errorBox: {
     marginTop: 16,
     padding: 12,
-    backgroundColor: "#1a0000",
+    backgroundColor: "#1a0d0d",
     borderLeftWidth: 3,
-    borderLeftColor: "#ff3333",
+    borderLeftColor: "#ff4d4d",
   },
-  errorText: { fontFamily: "monospace", fontSize: 13, color: "#ff3333" },
+
+  errorText: {
+    fontFamily: "monospace",
+    fontSize: 13,
+    color: "#ff9999",
+  },
 });
