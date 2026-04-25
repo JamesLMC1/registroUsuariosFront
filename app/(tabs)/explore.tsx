@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 type Estudiante = {
   id: number;
@@ -31,7 +31,7 @@ export default function NotasScreen() {
     setLoading(true);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
-      const res = await fetch(`${apiUrl}/buscar-estudiante?cedula=${encodeURIComponent(cedula)}&nombre=${encodeURIComponent(nombre)}`);
+      const res = await fetch(`${apiUrl}buscar-estudiante?cedula=${encodeURIComponent(cedula)}&nombre=${encodeURIComponent(nombre)}`);
       const data = await res.json();
       if (res.ok && data.estudiante) {
         setEstudiante(data.estudiante);
@@ -62,7 +62,7 @@ export default function NotasScreen() {
     try {
       // Se puede calcular localmente, pero también se puede consultar al backend si se desea
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
-      const res = await fetch(`${apiUrl}/definitiva?estudiante_id=${estudiante.id}&materia=${encodeURIComponent(estudiante.materia)}`);
+      const res = await fetch(`${apiUrl}definitiva?estudiante_id=${estudiante.id}&materia=${encodeURIComponent(estudiante.materia)}`);
       const data = await res.json();
       if (res.ok && typeof data.definitiva === 'number') {
         setDefinitiva(data.definitiva);
@@ -96,7 +96,7 @@ export default function NotasScreen() {
     setLoading(true);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
-      const res = await fetch(`${apiUrl}/notas`, {
+      const res = await fetch(`${apiUrl}notas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

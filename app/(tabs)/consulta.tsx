@@ -1,8 +1,8 @@
 
 
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, FlatList } from 'react-native';
 import Constants from 'expo-constants';
+import React, { useState } from 'react';
+import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 
 type Nota = {
   materia: string;
@@ -40,7 +40,7 @@ export default function ConsultaScreen() {
     setResult(null);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
-      const res = await fetch(`${apiUrl}/notas?cedula=${encodeURIComponent(cedula)}&nombre=${encodeURIComponent(nombre)}`);
+      const res = await fetch(`${apiUrl}notas?cedula=${encodeURIComponent(cedula)}&nombre=${encodeURIComponent(nombre)}`);
       if (!res.ok) {
         const data = await res.json();
         setError(data.error || 'Error al consultar');
