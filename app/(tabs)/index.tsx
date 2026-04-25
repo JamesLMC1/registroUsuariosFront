@@ -1,7 +1,6 @@
-
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function RegistroScreen() {
   const [cedula, setCedula] = useState('');
@@ -26,64 +25,210 @@ export default function RegistroScreen() {
       });
       const data = await res.json();
       if (res.status === 201) {
-        setMensaje('Estudiante registrado correctamente');
+        setMensaje('// estudiante registrado con éxito ✓');
         setCedula(''); setNombre(''); setCorreo(''); setCelular(''); setMateria('');
       } else {
-        setError(data.error || 'Error al registrar');
+        setError(`// error: ${data.error || 'Error al registrar'}`);
       }
-    } catch (e) {
-      setError('Error de red');
+    } catch {
+      setError('// error: conexión fallida');
     }
     setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registro de Estudiante</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Cédula"
-        value={cedula}
-        onChangeText={setCedula}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={nombre}
-        onChangeText={setNombre}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        value={correo}
-        onChangeText={setCorreo}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Celular"
-        value={celular}
-        onChangeText={setCelular}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Materia"
-        value={materia}
-        onChangeText={setMateria}
-      />
-      <Button title={loading ? 'Registrando...' : 'Registrar'} onPress={registrarEstudiante} disabled={loading} />
-      {mensaje ? <Text style={styles.success}>{mensaje}</Text> : null}
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-    </View>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.prompt}>{'>'} registro.js</Text>
+        <Text style={styles.title}>nuevo_estudiante()</Text>
+        <View style={styles.divider} />
+      </View>
+
+      {/* Form */}
+      <View style={styles.form}>
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// cedula'}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="0000000000"
+            placeholderTextColor="#3a4a3a"
+            value={cedula}
+            onChangeText={setCedula}
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// nombre'}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Juan Pérez"
+            placeholderTextColor="#3a4a3a"
+            value={nombre}
+            onChangeText={setNombre}
+          />
+        </View>
+
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// correo'}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="juan@email.com"
+            placeholderTextColor="#3a4a3a"
+            value={correo}
+            onChangeText={setCorreo}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// celular'}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="3001234567"
+            placeholderTextColor="#3a4a3a"
+            value={celular}
+            onChangeText={setCelular}
+            keyboardType="phone-pad"
+          />
+        </View>
+
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// materia'}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Matemáticas"
+            placeholderTextColor="#3a4a3a"
+            value={materia}
+            onChangeText={setMateria}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={[styles.button, loading && styles.buttonDisabled]}
+          onPress={registrarEstudiante}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? '[ ejecutando... ]' : '[ REGISTRAR ]'}
+          </Text>
+        </TouchableOpacity>
+
+        {mensaje ? (
+          <View style={styles.successBox}>
+            <Text style={styles.successText}>{mensaje}</Text>
+          </View>
+        ) : null}
+
+        {error ? (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff', justifyContent: 'center' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 6, padding: 8, marginBottom: 12 },
-  error: { color: 'red', marginTop: 10, textAlign: 'center' },
-  success: { color: 'green', marginTop: 10, textAlign: 'center' },
+  container: {
+    flex: 1,
+    backgroundColor: '#0a0f0a',
+  },
+  content: {
+    padding: 24,
+    paddingTop: 60,
+  },
+  header: {
+    marginBottom: 32,
+  },
+  prompt: {
+    fontFamily: 'monospace',
+    fontSize: 12,
+    color: '#4a7c4a',
+    marginBottom: 4,
+  },
+  title: {
+    fontFamily: 'monospace',
+    fontSize: 22,
+    color: '#00ff41',
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textShadowColor: '#00ff4155',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#1a2e1a',
+  },
+  form: {
+    gap: 4,
+  },
+  fieldGroup: {
+    marginBottom: 16,
+  },
+  label: {
+    fontFamily: 'monospace',
+    fontSize: 12,
+    color: '#4a7c4a',
+    marginBottom: 6,
+  },
+  input: {
+    fontFamily: 'monospace',
+    fontSize: 14,
+    color: '#00ff41',
+    backgroundColor: '#0d160d',
+    borderWidth: 1,
+    borderColor: '#1a3a1a',
+    borderRadius: 4,
+    padding: 12,
+  },
+  button: {
+    marginTop: 24,
+    backgroundColor: '#001a00',
+    borderWidth: 1,
+    borderColor: '#00ff41',
+    borderRadius: 4,
+    padding: 16,
+    alignItems: 'center',
+  },
+  buttonDisabled: {
+    borderColor: '#2a4a2a',
+  },
+  buttonText: {
+    fontFamily: 'monospace',
+    fontSize: 14,
+    color: '#00ff41',
+    fontWeight: 'bold',
+    letterSpacing: 2,
+  },
+  successBox: {
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: '#001a00',
+    borderLeftWidth: 3,
+    borderLeftColor: '#00ff41',
+    borderRadius: 2,
+  },
+  successText: {
+    fontFamily: 'monospace',
+    fontSize: 13,
+    color: '#00ff41',
+  },
+  errorBox: {
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: '#1a0000',
+    borderLeftWidth: 3,
+    borderLeftColor: '#ff3333',
+    borderRadius: 2,
+  },
+  errorText: {
+    fontFamily: 'monospace',
+    fontSize: 13,
+    color: '#ff3333',
+  },
 });

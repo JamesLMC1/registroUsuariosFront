@@ -1,7 +1,6 @@
-
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 type Estudiante = {
   id: number;
@@ -24,10 +23,7 @@ export default function NotasScreen() {
 
   const buscarEstudiante = async () => {
     setMensaje(''); setError(''); setEstudiante(null);
-    if (!cedula || !nombre) {
-      setError('Ingrese cédula y nombre');
-      return;
-    }
+    if (!cedula || !nombre) { setError('// error: cédula y nombre requeridos'); return; }
     setLoading(true);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
@@ -36,170 +32,172 @@ export default function NotasScreen() {
       if (res.ok && data.estudiante) {
         setEstudiante(data.estudiante);
       } else {
-        setError(data.error || 'No encontrado');
+        setError(`// error: ${data.error || 'no encontrado'}`);
       }
     } catch {
-      setError('Error de red');
+      setError('// error: conexión fallida');
     }
     setLoading(false);
   };
 
   const calcularDefinitiva = async () => {
     setMensaje(''); setError('');
-    if (!estudiante) {
-      setError('Primero busque el estudiante');
-      return;
-    }
-    const n1 = parseFloat(notas.nota1);
-    const n2 = parseFloat(notas.nota2);
-    const n3 = parseFloat(notas.nota3);
-    const n4 = parseFloat(notas.nota4);
-    if ([n1, n2, n3, n4].some(isNaN)) {
-      setError('Ingrese las 4 notas');
-      return;
-    }
+    if (!estudiante) { setError('// error: busque el estudiante primero'); return; }
+    const n1 = parseFloat(notas.nota1), n2 = parseFloat(notas.nota2);
+    const n3 = parseFloat(notas.nota3), n4 = parseFloat(notas.nota4);
+    if ([n1, n2, n3, n4].some(isNaN)) { setError('// error: ingrese las 4 notas'); return; }
     setLoading(true);
     try {
-      // Se puede calcular localmente, pero también se puede consultar al backend si se desea
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
       const res = await fetch(`${apiUrl}definitiva?estudiante_id=${estudiante.id}&materia=${encodeURIComponent(estudiante.materia)}`);
       const data = await res.json();
       if (res.ok && typeof data.definitiva === 'number') {
         setDefinitiva(data.definitiva);
       } else {
-        // Si no hay notas previas, calcular localmente
-        const def = (n1 + n2 + n3 + n4) / 4;
-        setDefinitiva(Number(def.toFixed(2)));
+        setDefinitiva(Number(((n1 + n2 + n3 + n4) / 4).toFixed(2)));
       }
     } catch {
-      // Si hay error, calcular localmente
-      const def = (n1 + n2 + n3 + n4) / 4;
-      setDefinitiva(Number(def.toFixed(2)));
+      setDefinitiva(Number(((n1 + n2 + n3 + n4) / 4).toFixed(2)));
     }
     setLoading(false);
   };
 
   const registrarNotas = async () => {
     setMensaje(''); setError('');
-    if (!estudiante) {
-      setError('Primero busque el estudiante');
-      return;
-    }
-    const n1 = parseFloat(notas.nota1);
-    const n2 = parseFloat(notas.nota2);
-    const n3 = parseFloat(notas.nota3);
-    const n4 = parseFloat(notas.nota4);
-    if ([n1, n2, n3, n4].some(isNaN)) {
-      setError('Ingrese las 4 notas');
-      return;
-    }
+    if (!estudiante) { setError('// error: busque el estudiante primero'); return; }
+    const n1 = parseFloat(notas.nota1), n2 = parseFloat(notas.nota2);
+    const n3 = parseFloat(notas.nota3), n4 = parseFloat(notas.nota4);
+    if ([n1, n2, n3, n4].some(isNaN)) { setError('// error: ingrese las 4 notas'); return; }
     setLoading(true);
     try {
       const apiUrl = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.apiUrl || '';
       const res = await fetch(`${apiUrl}notas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          estudiante_id: estudiante.id,
-          materia: estudiante.materia,
-          nota1: n1,
-          nota2: n2,
-          nota3: n3,
-          nota4: n4
-        })
+        body: JSON.stringify({ estudiante_id: estudiante.id, materia: estudiante.materia, nota1: n1, nota2: n2, nota3: n3, nota4: n4 })
       });
       const data = await res.json();
       if (res.status === 201) {
-        setMensaje('Notas registradas correctamente');
+        setMensaje('// notas registradas con éxito ✓');
         setNotas({ nota1: '', nota2: '', nota3: '', nota4: '' });
         setDefinitiva(null);
       } else {
-        setError(data.error || 'Error al registrar notas');
+        setError(`// error: ${data.error || 'error al registrar'}`);
       }
     } catch {
-      setError('Error de red');
+      setError('// error: conexión fallida');
     }
     setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registro de Notas</Text>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <View style={styles.header}>
+        <Text style={styles.prompt}>{'>'} notas.js</Text>
+        <Text style={styles.title}>registrar_notas()</Text>
+        <View style={styles.divider} />
+      </View>
+
       {/* Buscar estudiante */}
-      <TextInput
-        style={styles.input}
-        placeholder="Cédula"
-        value={cedula}
-        onChangeText={setCedula}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={nombre}
-        onChangeText={setNombre}
-      />
-      <Button title={loading ? 'Buscando...' : 'Buscar Estudiante'} onPress={buscarEstudiante} disabled={loading} />
+      <View style={styles.section}>
+        <Text style={styles.sectionLabel}>{'/* buscar estudiante */'}</Text>
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// cedula'}</Text>
+          <TextInput style={styles.input} placeholder="0000000000" placeholderTextColor="#3a4a3a"
+            value={cedula} onChangeText={setCedula} keyboardType="numeric" />
+        </View>
+        <View style={styles.fieldGroup}>
+          <Text style={styles.label}>{'// nombre'}</Text>
+          <TextInput style={styles.input} placeholder="Juan Pérez" placeholderTextColor="#3a4a3a"
+            value={nombre} onChangeText={setNombre} />
+        </View>
+        <TouchableOpacity style={[styles.button, styles.buttonSecondary]} onPress={buscarEstudiante} disabled={loading}>
+          <Text style={[styles.buttonText, styles.buttonTextSecondary]}>
+            {loading ? '[ buscando... ]' : '[ BUSCAR ]'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Resultado estudiante */}
       {estudiante && (
         <View style={styles.resultBox}>
-          <Text style={styles.resultTitle}>Estudiante:</Text>
-          <Text>Nombre: {estudiante.nombre}</Text>
-          <Text>Cédula: {estudiante.cedula}</Text>
-          <Text>Materia: {estudiante.materia}</Text>
+          <Text style={styles.resultHeader}>{'// estudiante encontrado'}</Text>
+          <Text style={styles.resultLine}><Text style={styles.key}>nombre: </Text><Text style={styles.val}>"{estudiante.nombre}"</Text></Text>
+          <Text style={styles.resultLine}><Text style={styles.key}>cedula: </Text><Text style={styles.val}>"{estudiante.cedula}"</Text></Text>
+          <Text style={styles.resultLine}><Text style={styles.key}>materia: </Text><Text style={styles.val}>"{estudiante.materia}"</Text></Text>
         </View>
       )}
-      {/* Inputs de notas */}
+
+      {/* Notas */}
       {estudiante && (
-        <View style={styles.notasBox}>
-          <TextInput
-            style={styles.input}
-            placeholder="Nota 1"
-            value={notas.nota1}
-            onChangeText={v => setNotas(n => ({ ...n, nota1: v }))}
-            keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Nota 2"
-            value={notas.nota2}
-            onChangeText={v => setNotas(n => ({ ...n, nota2: v }))}
-            keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Nota 3"
-            value={notas.nota3}
-            onChangeText={v => setNotas(n => ({ ...n, nota3: v }))}
-            keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Nota 4"
-            value={notas.nota4}
-            onChangeText={v => setNotas(n => ({ ...n, nota4: v }))}
-            keyboardType="numeric"
-          />
-          <Button title="Calcular Definitiva" onPress={calcularDefinitiva} />
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>{'/* ingresar notas */'}</Text>
+          {['nota1', 'nota2', 'nota3', 'nota4'].map((key, i) => (
+            <View key={key} style={styles.fieldGroup}>
+              <Text style={styles.label}>{`// nota${i + 1}`}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="0.0"
+                placeholderTextColor="#3a4a3a"
+                value={notas[key as keyof typeof notas]}
+                onChangeText={v => setNotas(n => ({ ...n, [key]: v }))}
+                keyboardType="numeric"
+              />
+            </View>
+          ))}
+
           {definitiva !== null && (
-            <Text style={styles.definitiva}>Definitiva: {definitiva}</Text>
+            <View style={styles.definitivaBox}>
+              <Text style={styles.definitivaLabel}>{'// definitiva'}</Text>
+              <Text style={styles.definitivaVal}>{definitiva}</Text>
+            </View>
           )}
-          <Button title={loading ? 'Registrando...' : 'Registrar Notas'} onPress={registrarNotas} disabled={loading} />
+
+          <TouchableOpacity style={[styles.button, styles.buttonSecondary, { marginBottom: 12 }]} onPress={calcularDefinitiva} disabled={loading}>
+            <Text style={[styles.buttonText, styles.buttonTextSecondary]}>[ CALCULAR ]</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={registrarNotas} disabled={loading}>
+            <Text style={styles.buttonText}>{loading ? '[ ejecutando... ]' : '[ REGISTRAR NOTAS ]'}</Text>
+          </TouchableOpacity>
         </View>
       )}
-      {mensaje ? <Text style={styles.success}>{mensaje}</Text> : null}
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-    </View>
+
+      {mensaje ? <View style={styles.successBox}><Text style={styles.successText}>{mensaje}</Text></View> : null}
+      {error ? <View style={styles.errorBox}><Text style={styles.errorText}>{error}</Text></View> : null}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 6, padding: 8, marginBottom: 12 },
-  resultBox: { marginTop: 20, padding: 12, backgroundColor: '#f2f2f2', borderRadius: 8 },
-  resultTitle: { fontWeight: 'bold', marginTop: 8 },
-  notasBox: { marginTop: 20 },
-  definitiva: { fontWeight: 'bold', color: '#007b00', marginVertical: 10, textAlign: 'center' },
-  error: { color: 'red', marginTop: 10, textAlign: 'center' },
-  success: { color: 'green', marginTop: 10, textAlign: 'center' },
+  container: { flex: 1, backgroundColor: '#0a0f0a' },
+  content: { padding: 24, paddingTop: 60 },
+  header: { marginBottom: 32 },
+  prompt: { fontFamily: 'monospace', fontSize: 12, color: '#4a7c4a', marginBottom: 4 },
+  title: { fontFamily: 'monospace', fontSize: 22, color: '#00ff41', fontWeight: 'bold', marginBottom: 16,
+    textShadowColor: '#00ff4155', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 10 },
+  divider: { height: 1, backgroundColor: '#1a2e1a' },
+  section: { marginBottom: 24 },
+  sectionLabel: { fontFamily: 'monospace', fontSize: 12, color: '#2a5a2a', marginBottom: 16, fontStyle: 'italic' },
+  fieldGroup: { marginBottom: 16 },
+  label: { fontFamily: 'monospace', fontSize: 12, color: '#4a7c4a', marginBottom: 6 },
+  input: { fontFamily: 'monospace', fontSize: 14, color: '#00ff41', backgroundColor: '#0d160d',
+    borderWidth: 1, borderColor: '#1a3a1a', borderRadius: 4, padding: 12 },
+  button: { backgroundColor: '#001a00', borderWidth: 1, borderColor: '#00ff41', borderRadius: 4, padding: 16, alignItems: 'center' },
+  buttonSecondary: { borderColor: '#2a5a2a', marginBottom: 0 },
+  buttonText: { fontFamily: 'monospace', fontSize: 14, color: '#00ff41', fontWeight: 'bold', letterSpacing: 2 },
+  buttonTextSecondary: { color: '#4a9a4a' },
+  resultBox: { backgroundColor: '#0d160d', borderWidth: 1, borderColor: '#1a3a1a', borderRadius: 4, padding: 16, marginBottom: 24 },
+  resultHeader: { fontFamily: 'monospace', fontSize: 12, color: '#2a5a2a', marginBottom: 10, fontStyle: 'italic' },
+  resultLine: { fontFamily: 'monospace', fontSize: 13, marginBottom: 4 },
+  key: { color: '#4a7c4a' },
+  val: { color: '#00ff41' },
+  definitivaBox: { backgroundColor: '#001a00', borderWidth: 1, borderColor: '#00ff41', borderRadius: 4, padding: 16, marginBottom: 16, alignItems: 'center' },
+  definitivaLabel: { fontFamily: 'monospace', fontSize: 12, color: '#4a7c4a', marginBottom: 4 },
+  definitivaVal: { fontFamily: 'monospace', fontSize: 32, color: '#00ff41', fontWeight: 'bold',
+    textShadowColor: '#00ff4155', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 10 },
+  successBox: { marginTop: 16, padding: 12, backgroundColor: '#001a00', borderLeftWidth: 3, borderLeftColor: '#00ff41', borderRadius: 2 },
+  successText: { fontFamily: 'monospace', fontSize: 13, color: '#00ff41' },
+  errorBox: { marginTop: 16, padding: 12, backgroundColor: '#1a0000', borderLeftWidth: 3, borderLeftColor: '#ff3333', borderRadius: 2 },
+  errorText: { fontFamily: 'monospace', fontSize: 13, color: '#ff3333' },
 });
