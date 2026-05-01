@@ -156,6 +156,7 @@ export default function NotasScreen() {
             style={styles.input}
             placeholder="Juan Pérez"
             placeholderTextColor="#3a4a3a"
+            value={estudiante?.nombre ?? ""}
             editable={false}
           />
         </View>

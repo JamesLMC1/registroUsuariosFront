@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -34,7 +34,6 @@ type ConsultaResult = {
 
 export default function ConsultaScreen() {
   const [cedula, setCedula] = useState("");
-  const [nombre, setNombre] = useState("");
   const [result, setResult] = useState<ConsultaResult | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ export default function ConsultaScreen() {
         Constants.expoConfig?.extra?.apiUrl ||
         "";
       const res = await fetch(
-        `${apiUrl}notas?cedula=${encodeURIComponent(cedula)}&nombre=${encodeURIComponent(nombre)}`,
+        `${apiUrl}notas?cedula=${encodeURIComponent(cedula)}`,
       );
       if (!res.ok) {
         const data = await res.json();
@@ -100,8 +99,8 @@ export default function ConsultaScreen() {
             style={styles.input}
             placeholder="Juan Pérez"
             placeholderTextColor="#3a4a3a"
-            value={nombre}
-            onChangeText={setNombre}
+            value={estudiante?.nombre ?? ""}
+            editable={false}
           />
         </View>
         <TouchableOpacity
