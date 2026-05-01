@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -20,7 +20,6 @@ type Estudiante = {
 
 export default function NotasScreen() {
   const [cedula, setCedula] = useState("");
-  const [nombre, setNombre] = useState("");
   const [estudiante, setEstudiante] = useState<Estudiante | null>(null);
   const [notas, setNotas] = useState({
     nota1: "",
@@ -37,8 +36,8 @@ export default function NotasScreen() {
     setError("");
     setEstudiante(null);
 
-    if (!cedula || !nombre) {
-      setError("// error: cédula y nombre requeridos");
+    if (!cedula) {
+      setError("// error: cédula");
       return;
     }
 
@@ -52,7 +51,7 @@ export default function NotasScreen() {
       const res = await fetch(
         `${apiUrl}buscar-estudiante?cedula=${encodeURIComponent(
           cedula,
-        )}&nombre=${encodeURIComponent(nombre)}`,
+        )}`,
       );
 
       const data = await res.json();
