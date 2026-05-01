@@ -99,13 +99,13 @@ export default function NotasScreen() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          estudiante_id: estudiante.id,
-          materia: estudiante.materia,
-          nota1: n1,
-          nota2: n2,
-          nota3: n3,
-          nota4: n4,
-        }),
+        estudiante_id: estudiante?.id,
+        materia: estudiante?.materia,
+        nota1: n1,
+        nota2: n2,
+        nota3: n3,
+        nota4: n4,
+      }),
       });
 
       const data = await res.json();
@@ -156,8 +156,7 @@ export default function NotasScreen() {
             style={styles.input}
             placeholder="Juan Pérez"
             placeholderTextColor="#3a4a3a"
-            value={nombre}
-            onChangeText={setNombre}
+            editable={false}
           />
         </View>
 
@@ -172,28 +171,27 @@ export default function NotasScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Resultado */}
-      {estudiante && (
-        <View style={styles.resultBox}>
-          <Text style={styles.resultHeader}>{"// estudiante encontrado"}</Text>
+        {/* Resultado */}
+        {estudiante && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultHeader}>{"// estudiante encontrado"}</Text>
 
-          <Text style={styles.resultLine}>
-            <Text style={styles.key}>nombre: </Text>
-            <Text style={styles.val}>{estudiante.nombre}</Text>
-          </Text>
+            <Text style={styles.resultLine}>
+              <Text style={styles.key}>nombre: </Text>
+              <Text style={styles.val}>{estudiante?.nombre}</Text>
+            </Text>
 
-          <Text style={styles.resultLine}>
-            <Text style={styles.key}>cedula: </Text>
-            <Text style={styles.val}>{estudiante.cedula}</Text>
-          </Text>
+            <Text style={styles.resultLine}>
+              <Text style={styles.key}>cedula: </Text>
+              <Text style={styles.val}>{estudiante?.cedula}</Text>
+            </Text>
 
-          <Text style={styles.resultLine}>
-            <Text style={styles.key}>materia: </Text>
-            <Text style={styles.val}>{estudiante.materia}</Text>
-          </Text>
-        </View>
-      )}
-
+            <Text style={styles.resultLine}>
+              <Text style={styles.key}>materia: </Text>
+              <Text style={styles.val}>{estudiante?.materia}</Text>
+            </Text>
+          </View>
+        )}
       {/* Notas */}
       {estudiante && (
         <View style={styles.section}>
