@@ -99,7 +99,7 @@ export default function ConsultaScreen() {
             style={styles.input}
             placeholder="Juan Pérez"
             placeholderTextColor="#3a4a3a"
-            value={estudiante?.nombre ?? ""}
+            value={result?.estudiante?.nombre ?? ""}
             editable={false}
           />
         </View>
